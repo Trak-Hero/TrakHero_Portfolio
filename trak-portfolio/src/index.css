@@ -10,6 +10,16 @@ body {
   fon-weight: 300;
 }
 
+/* index.css or global.css */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+
 .alegreya-sans-thin {
   font-family: "Alegreya Sans", sans-serif;
   font-weight: 100;

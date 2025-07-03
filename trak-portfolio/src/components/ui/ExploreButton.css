@@ -1,0 +1,46 @@
+.explore-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: lighten;
+  z-index: 20;
+  transition: all 0.3s ease;
+}
+
+.explore-container:hover {
+  background: black;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.explore-container:hover .text {
+  color: white;
+}
+
+.mask {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.0) 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+.text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: black;
+  z-index: 10;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}

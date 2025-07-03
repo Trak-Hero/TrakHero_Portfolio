@@ -6,8 +6,13 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import TextScrollReveal from './components/ui/TextScrollReveal'
 import ScrollSync from './components/canvas/ScrollSync'
+import ExploreGate from './components/ui/ExploreGate'
 
 function App() {
+  const handleExploreClick = () => {
+    console.log("Transition to next scene here.")
+    // TODO: trigger route change, overlay fade, or 3D scene update
+  }
   return (
     <div className="w-screen h-screen relative">
       {/* This is ABOVE Canvas and supports Tailwind */}
@@ -24,6 +29,7 @@ function App() {
           {/* Invisible scroll container */}
           <Html fullscreen>
             <div style={{ height: '300vh', width: '100vw' }} />
+            <ExploreGate onClick={handleExploreClick} />
           </Html>
         </ScrollControls>
         <EffectComposer>
