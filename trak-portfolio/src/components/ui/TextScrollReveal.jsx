@@ -3,7 +3,7 @@ import { useScrollStore } from '../../stores/useScrollStore'
 
 const messages = [
   { threshold: 0.0, text: "Welcome to Trak’s World" },
-  { threshold: 0.3, text: "Explore Data & Web Creation" },
+  { threshold: 0.3, text: "Explore Data, Web, and Design Creation" },
   { threshold: 0.7, text: "Embark on the Journey" }
 ]
 
