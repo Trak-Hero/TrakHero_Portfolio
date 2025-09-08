@@ -6,7 +6,7 @@ import PlanetScene from './components/canvas/PlanetScene'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import TextScrollReveal from './components/ui/TextScrollReveal'
-import ScrollSync from './components/canvas/ScrollSync'
+import ScrollSync from './components/canvas/scrollSync'
 import ExploreGate from './components/ui/ExploreGate'
 import MenuPage from "./pages/MenuPage"
 
