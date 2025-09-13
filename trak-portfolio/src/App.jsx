@@ -12,6 +12,7 @@ import MenuPage from "./pages/MenuPage"
 import UnmuteNudge from "./components/ui/UnmuteNudge"
 import HyperdriveOverlay from "./components/ui/HyperdriveOverlay"
 import SpaceRadio from "./components/ui/SpaceRadio";
+import PageLoader from "./components/ui/PageLoader";
 import React, { useEffect, useRef, useState } from "react"
 
 // ✨ Router
@@ -156,6 +157,7 @@ function Landing() {
 export default function App() {
   return (
     <Router>
+      <PageLoader /> 
       {/* 🎵 Global background music (mounted once for all routes) */}
       <BackgroundAudio />
       <UnmuteNudge />
