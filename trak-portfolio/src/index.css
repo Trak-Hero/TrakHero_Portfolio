@@ -103,3 +103,30 @@ html, body, #root {
   font-weight: 900;
   font-style: italic;
 }
+
+/* put in a global css (e.g., index.css) */
+/* Fixed, always-on-top skills button */
+.skills-hyper-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 10050; /* higher than Drei <Html> and most overlays */
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(10,13,20,0.6);
+  color: #eaf2ff;
+  font-weight: 700;
+  letter-spacing: .04em;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 8px 28px rgba(0,0,0,.25);
+}
+.skills-hyper-btn:hover {
+  background: rgba(255,255,255,.15);
+  transform: translateY(-1px);
+}
+.skills-hyper-btn:active {
+  transform: translateY(0);
+}

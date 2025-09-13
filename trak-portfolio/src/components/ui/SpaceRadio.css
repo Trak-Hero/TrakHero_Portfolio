@@ -1,0 +1,37 @@
+.space-radio{
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 10060;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(10,13,20,.55);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+  color: #eaf2ff;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+}
+
+.sr-row{ display: flex; gap: 6px; align-items: center; justify-content: center; }
+.sr-btn{
+  width: 34px; height: 34px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.08);
+  color: #eaf2ff; cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.sr-btn:hover{ background: rgba(255,255,255,.16); transform: translateY(-1px); }
+.sr-main{ width: 56px; font-size: 16px; font-weight: 700; }
+
+.sr-chips{ display: grid; grid-template-columns: repeat(2,auto); gap: 6px; }
+.sr-chip{
+  padding: 6px 10px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06); color:#eaf2ff;
+  font-size: 12px; letter-spacing:.02em; cursor:pointer;
+}
+.sr-chip:hover{ background: rgba(255,255,255,.14); }
+.sr-chip.active{ background: rgba(139,169,255,.28); border-color: rgba(172,200,255,.45); }
