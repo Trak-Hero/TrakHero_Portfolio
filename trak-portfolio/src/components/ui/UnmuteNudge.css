@@ -1,0 +1,45 @@
+/* src/components/ui/UnmuteNudge.css */
+.unmute-wrap{
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10,13,20,0.66);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  padding: 10px 12px 10px 10px;
+  animation: unmute-pop .25s ease-out;
+}
+@keyframes unmute-pop{ from{ transform: translateX(-50%) scale(.95); opacity:.0 } to{ transform: translateX(-50%) scale(1); opacity:1 } }
+
+.unmute-btn{
+  display:flex; align-items:center; gap:10px;
+  color: #eaf2ff; font-weight:700; letter-spacing:.04em;
+  text-transform: uppercase; font-size:.78rem;
+  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px; padding: 10px 14px; cursor: pointer;
+}
+.unmute-btn:hover{ background: rgba(255,255,255,.18) }
+
+.unmute-icon{ filter: drop-shadow(0 2px 6px rgba(255,255,255,.2)) }
+.unmute-text{ white-space: nowrap }
+.unmute-kbd{
+  margin-left: 6px; opacity:.7; font-size:.7rem;
+  padding:2px 6px; border-radius:6px;
+  border:1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.06);
+}
+
+.unmute-dismiss{
+  width:30px; height:30px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.18); color:#eaf2ff;
+  background: rgba(255,255,255,.06); cursor:pointer;
+}
+.unmute-dismiss:hover{ background: rgba(255,255,255,.14) }

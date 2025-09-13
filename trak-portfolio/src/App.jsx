@@ -9,56 +9,70 @@ import TextScrollReveal from './components/ui/TextScrollReveal'
 import ScrollSync from './components/canvas/scrollSync'
 import ExploreGate from './components/ui/ExploreGate'
 import MenuPage from "./pages/MenuPage"
+import UnmuteNudge from "./components/ui/UnmuteNudge";
 import React, { useEffect, useRef } from "react"
 
 // ✨ Router
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"
 
 function BackgroundAudio() {
-  const audioRef = useRef(null)
+  const audioRef = useRef(null);
+  const unlockedRef = useRef(false);
 
   useEffect(() => {
-    const el = audioRef.current
-    if (!el) return
-    el.volume = 0.6 // set desired volume
-    // Try to autoplay (will fail silently until user gesture)
-    el.play().catch(() => {})
+    const el = audioRef.current;
+    if (!el) return;
 
-    // Unlock on first user interaction (required by Chrome/Safari)
+    el.volume = 0.6;
+    el.loop = true;
+    el.preload = "auto";
+    el.src = "/bgspace.mp3";
+    el.play().catch(() => {});
+
     const unlock = () => {
-      el.play().catch(() => {})
-      window.removeEventListener('pointerdown', unlock)
-      window.removeEventListener('keydown', unlock)
-      window.removeEventListener('touchstart', unlock)
-    }
-    window.addEventListener('pointerdown', unlock, { once: true })
-    window.addEventListener('keydown', unlock, { once: true })
-    window.addEventListener('touchstart', unlock, { once: true })
+      if (unlockedRef.current) return;
+      unlockedRef.current = true;
+      el.play().catch(() => {});
+      document.removeEventListener("pointerdown", unlock, true);
+      document.removeEventListener("keydown", unlock, true);
+      document.removeEventListener("touchstart", unlock, true);
+    };
+
+    document.addEventListener("pointerdown", unlock, true);
+    document.addEventListener("touchstart", unlock, true);
+
+    // "M" shortcut to unmute/start
+    const onKey = (e) => {
+      if (e.key.toLowerCase() === "m") {
+        el.play().catch(() => {});
+        // store so the nudge never shows again
+        localStorage.setItem("siteAudioAcknowledged", "true");
+        // hide any nudge if still visible
+        const ev = new CustomEvent("hide-unmute-nudge");
+        window.dispatchEvent(ev);
+      }
+    };
+    document.addEventListener("keydown", onKey, true);
 
     return () => {
-      window.removeEventListener('pointerdown', unlock)
-      window.removeEventListener('keydown', unlock)
-      window.removeEventListener('touchstart', unlock)
-    }
-  }, [])
+      document.removeEventListener("pointerdown", unlock, true);
+      document.removeEventListener("touchstart", unlock, true);
+      document.removeEventListener("keydown", onKey, true);
+    };
+  }, []);
 
-  return (
-    <audio id="bg-music" ref={audioRef} loop preload="auto">
-      <source src="/music.mp3" type="audio/mpeg" />
-      {/* Optionally add an .ogg for wider support */}
-    </audio>
-  )
+  return <audio id="bg-music" ref={audioRef} playsInline />;
 }
 
 function Landing() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleExploreClick = () => {
-    // also nudge audio to start on this explicit user click
+    // Force play on explicit user gesture
     const a = document.getElementById('bg-music')
     a?.play?.().catch(() => {})
-    navigate("/menu");
-  };
+    navigate("/menu")
+  }
 
   return (
     <div className="w-screen h-screen relative">
@@ -88,7 +102,7 @@ function Landing() {
         </EffectComposer>
       </Canvas>
     </div>
-  );
+  )
 }
 
 export default function App() {
@@ -96,11 +110,12 @@ export default function App() {
     <Router>
       {/* 🎵 Global background music (mounted once for all routes) */}
       <BackgroundAudio />
+      <UnmuteNudge />
 
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/menu" element={<MenuPage />} />
       </Routes>
     </Router>
-  );
+  )
 }

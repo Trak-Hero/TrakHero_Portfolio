@@ -1,5 +1,6 @@
 // src/pages/MenuPage.jsx
 import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import "./MenuPage.css";
 
@@ -33,6 +34,7 @@ const DOMAINS = [
 ];
 
 export default function MenuPage() {
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const overlayRef = useRef(null);
   const warpRef = useRef(null);
@@ -93,6 +95,14 @@ export default function MenuPage() {
 
   return (
     <div ref={containerRef} className="menu-container">
+      {/* ❌ Close button */}
+        <button
+          className="menu-close"
+          onClick={() => navigate("/")}
+          aria-label="Close menu"
+        >
+          ✕
+        </button>
       {/* Starfield and glow */}
       <div className="bg-stars"></div>
       <div className="bottom-glow"></div>
