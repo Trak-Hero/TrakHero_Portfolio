@@ -130,3 +130,23 @@ html, body, #root {
 .skills-hyper-btn:active {
   transform: translateY(0);
 }
+
+.scroll-hint {
+  position: absolute;
+  top: 58%; /* just below the welcome text */
+  left: 50%;
+  transform: translateX(-50%);
+  color: #eaf2ff;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  animation: hintFade 2.5s ease-in-out infinite;
+  pointer-events: none; /* don’t block interactions */
+}
+
+@keyframes hintFade {
+  0%, 100% { opacity: 0.25; transform: translate(-50%, 0); }
+  50% { opacity: 1; transform: translate(-50%, 6px); }
+}
+

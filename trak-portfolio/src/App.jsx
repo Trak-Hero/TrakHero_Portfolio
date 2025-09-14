@@ -92,6 +92,9 @@ function Landing() {
     <div className="w-screen h-screen relative">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20">
         <TextScrollReveal />
+        <div className="scroll-hint">
+          <span>↓ Scroll to explore projects ↓</span>
+        </div>
       </div>
 
       <Canvas camera={{ position: [0, 5, 15], fov: 60 }}>
