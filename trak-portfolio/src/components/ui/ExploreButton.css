@@ -1,3 +1,4 @@
+/* Existing styles... */
 .explore-container {
   position: relative;
   width: 120px;
@@ -14,16 +15,29 @@
   mix-blend-mode: lighten;
   z-index: 20;
   transition: all 0.3s ease;
+  will-change: transform;
+}
+
+/* NEW: lock to viewport, slightly below center */
+.explore-fixed {
+  position: fixed;            /* centers relative to viewport */
+  left: 50%;
+  top: calc(50% + 6vh);       /* “slightly below center” – tune 6vh as desired */
+  transform: translate(-50%, -50%);
+}
+
+/* optional: adjust offset/size on very small screens */
+@media (max-width: 480px) {
+  .explore-container { width: 96px; height: 96px; }
+  .text { font-size: 1rem; }
+  .explore-fixed { top: calc(50% + 5vh); }
 }
 
 .explore-container:hover {
   background: black;
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
 }
-
-.explore-container:hover .text {
-  color: white;
-}
+.explore-container:hover .text { color: white; }
 
 .mask {
   position: absolute;
