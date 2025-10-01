@@ -7,33 +7,44 @@ export default function ExploreButton({ onClick }) {
   const maskRef = useRef(null);
   const btnRef = useRef(null);
   const [clicked, setClicked] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    if (!btnRef.current) return;
     const handleMouseMove = e => {
       if (clicked) return;
       const rect = btnRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      gsap.to(maskRef.current, { x, y, duration: 0.4, ease: "power2.out" });
+      gsap.to(maskRef.current, {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        duration: 0.4,
+        ease: "power2.out",
+      });
     };
-
     const el = btnRef.current;
     el.addEventListener("mousemove", handleMouseMove);
     return () => el.removeEventListener("mousemove", handleMouseMove);
   }, [clicked]);
 
   const handleClick = () => {
+    if (clicked) return;
     setClicked(true);
+
+    // 🔥 Trigger your scroll NOW so it behaves like before
+    if (typeof onClick === "function") onClick();
+
+    // Play the zoom and then remove the overlay
     gsap.to(btnRef.current, {
       scale: 20,
-      duration: 1.2,
+      duration: 1.0,
       ease: "power4.inOut",
       transformOrigin: "center center",
-      onComplete: onClick,
+      onComplete: () => setVisible(false),
     });
   };
 
-  // Render into body so no transformed ancestor can offset it
+  if (!visible) return null;
+
   return createPortal(
     <div className="explore-layer" aria-hidden={false}>
       <div
@@ -42,7 +53,7 @@ export default function ExploreButton({ onClick }) {
         onClick={handleClick}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleClick()}
+        onKeyDown={e => (e.key === "Enter" || e.key === " ") && handleClick()}
         aria-label="Discover projects"
       >
         <div className="mask" ref={maskRef} />
