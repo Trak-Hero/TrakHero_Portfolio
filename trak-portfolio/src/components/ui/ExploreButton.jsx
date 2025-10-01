@@ -6,13 +6,13 @@ import "./ExploreButton.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ExploreButton({ onClick, triggerSelector = "body" }) {
+export default function ExploreButton({ onClick, fadePercent = 0.2 }) {
   const maskRef = useRef(null);
   const btnRef  = useRef(null);
   const [clicked, setClicked] = useState(false);
   const [visible, setVisible] = useState(true);
 
-  // Hover glow tracking
+  // hover glow tracking (unchanged)
   useEffect(() => {
     if (!btnRef.current) return;
     const handleMouseMove = e => {
@@ -30,37 +30,41 @@ export default function ExploreButton({ onClick, triggerSelector = "body" }) {
     return () => el.removeEventListener("mousemove", handleMouseMove);
   }, [clicked]);
 
-  // 👇 Scroll-driven vertical offset: 6vh -> 0 as you scroll ~90% of a viewport
+  // 👇 Fade in during the last `fadePercent` of page scroll
   useEffect(() => {
     if (!btnRef.current) return;
-    const triggerEl = document.querySelector(triggerSelector) || document.body;
 
-    // Start slightly below center
-    gsap.set(btnRef.current, { y: () => window.innerHeight * 0.06 });
+    const endPx = () => ScrollTrigger.maxScroll(window);           // total scrollable px
+    const startPx = () => endPx() - window.innerHeight * fadePercent;
 
-    const tween = gsap.to(btnRef.current, {
-      y: 0,                    // at the end it's exactly centered
-      ease: "none",
-      scrollTrigger: {
-        trigger: triggerEl,    // usually your hero section; "body" also works
-        start: "top top",
-        end: () => `+=${Math.round(window.innerHeight * 0.9)}`, // ~90% of a viewport
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    });
+    // set initial state
+    gsap.set(btnRef.current, { autoAlpha: 0, y: 0 });
+
+    const tween = gsap.fromTo(
+      btnRef.current,
+      { autoAlpha: 0 },
+      {
+        autoAlpha: 1,
+        ease: "none",
+        scrollTrigger: {
+          start: () => startPx(),
+          end: () => endPx(),
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
 
     return () => tween.scrollTrigger && tween.scrollTrigger.kill();
-  }, [triggerSelector]);
+  }, [fadePercent]);
 
   const handleClick = () => {
     if (clicked) return;
     setClicked(true);
 
-    // Keep your original behavior: scroll immediately
+    // keep your onClick behavior (e.g., open section / route / etc.)
     if (typeof onClick === "function") onClick();
 
-    // Play zoom, then remove overlay
     gsap.to(btnRef.current, {
       scale: 20,
       duration: 1.0,
