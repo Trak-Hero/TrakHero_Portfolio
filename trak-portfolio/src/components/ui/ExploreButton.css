@@ -1,36 +1,31 @@
-/* Existing styles... */
+/* Fullscreen fixed layer that truly centers content relative to viewport */
+.explore-layer {
+  position: fixed;
+  inset: 0;                 /* top/right/bottom/left: 0 */
+  display: grid;
+  place-items: center;      /* centers horizontally + vertically */
+  z-index: 2000;            /* above scene/UI */
+  pointer-events: none;     /* layer ignores clicks... */
+}
+
+/* ...but the button itself is clickable */
 .explore-container {
-  position: relative;
+  pointer-events: auto;
+  position: relative;       /* keep your mask math the same */
   width: 120px;
   height: 120px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
   overflow: hidden;
-  text-align: center;
-  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;
   mix-blend-mode: lighten;
-  z-index: 20;
   transition: all 0.3s ease;
   will-change: transform;
-}
-
-/* NEW: lock to viewport, slightly below center */
-.explore-fixed {
-  position: fixed;            /* centers relative to viewport */
-  left: 50%;
-  top: calc(50% + 6vh);       /* “slightly below center” – tune 6vh as desired */
-  transform: translate(-50%, -50%);
-}
-
-/* optional: adjust offset/size on very small screens */
-@media (max-width: 480px) {
-  .explore-container { width: 96px; height: 96px; }
-  .text { font-size: 1rem; }
-  .explore-fixed { top: calc(50% + 5vh); }
+  /* slightly below center */
+  transform: translateY(6vh);
 }
 
 .explore-container:hover {
@@ -54,7 +49,12 @@
   font-size: 1.1rem;
   font-weight: 700;
   color: black;
-  z-index: 10;
+  z-index: 1;
   pointer-events: none;
   transition: color 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .explore-container { width: 96px; height: 96px; transform: translateY(5vh); }
+  .text { font-size: 1rem; }
 }
