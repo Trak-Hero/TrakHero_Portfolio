@@ -1,35 +1,17 @@
-.explore-layer {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  z-index: 2000;
-  pointer-events: none;
-}
-
-/* Button remains centered; click-through allowed on the element */
+/* --- Center the DISCOVER button on the viewport, CSS-only override --- */
 .explore-container {
-  pointer-events: auto;
-  position: relative;
-  width: 120px; height: 120px; border-radius: 50%;
-  background: #fff; cursor: pointer; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  mix-blend-mode: lighten; transition: all .3s ease; will-change: transform, opacity;
-  transform: translateY(6vh); /* nudge below center; optional: set to 0 for exact center */
+  position: fixed !important;       /* ignore parent flow */
+  left: 50vw;                        /* viewport-based centering (resists transformed ancestors) */
+  top: 50dvh;                        /* dynamic viewport height for mobile chrome/safari */
+  transform: translate(-50%, -50%) translateY(6dvh);  /* nudge slightly below center */
+  z-index: 2000;                     /* above the scene */
+  pointer-events: auto;              /* still clickable */
 }
 
-.explore-container:hover { background:#000; box-shadow:0 0 40px rgba(255,255,255,.3); }
-.explore-container:hover .text { color:#fff; }
-
-.mask {
-  position: absolute; width:160px; height:160px;
-  background: radial-gradient(circle, rgba(255,255,255,.8) 0%, rgba(255,255,255,0) 70%);
-  pointer-events:none; transform: translate(-50%,-50%); mix-blend-mode:screen;
-}
-
-.text { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; color:#000; z-index:1; pointer-events:none; transition:color .3s; }
-
-@media (max-width:480px) {
-  .explore-container { width:96px; height:96px; transform: translateY(5vh); }
-  .text { font-size:1rem; }
+/* Fallback for browsers without dvh support */
+@supports not (top: 50dvh) {
+  .explore-container {
+    top: 50vh;
+    transform: translate(-50%, -50%) translateY(6vh);
+  }
 }
