@@ -1,17 +1,22 @@
-/* --- Center the DISCOVER button on the viewport, CSS-only override --- */
 .explore-container {
-  position: fixed !important;       /* ignore parent flow */
-  left: 50vw;                        /* viewport-based centering (resists transformed ancestors) */
-  top: 50dvh;                        /* dynamic viewport height for mobile chrome/safari */
-  transform: translate(-50%, -50%) translateY(6dvh);  /* nudge slightly below center */
-  z-index: 2000;                     /* above the scene */
-  pointer-events: auto;              /* still clickable */
-}
+  position: fixed;              /* pin to viewport instead of relative parent */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(6vh); 
+  /* ^ centers both axes, then nudges it slightly down (remove translateY if you want exact center) */
 
-/* Fallback for browsers without dvh support */
-@supports not (top: 50dvh) {
-  .explore-container {
-    top: 50vh;
-    transform: translate(-50%, -50%) translateY(6vh);
-  }
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: lighten;
+  z-index: 20;
+  transition: all 0.3s ease;
 }
