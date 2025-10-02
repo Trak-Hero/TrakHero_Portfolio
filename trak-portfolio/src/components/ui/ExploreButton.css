@@ -1,10 +1,8 @@
 .explore-container {
-  position: fixed;              /* pin to viewport instead of relative parent */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(6vh); 
-  /* ^ centers both axes, then nudges it slightly down (remove translateY if you want exact center) */
-
+  position: relative;
+  margin-left: auto;   /* push from left */
+  margin-right: auto;  /* push from right */
+  
   width: 120px;
   height: 120px;
   border-radius: 50%;
