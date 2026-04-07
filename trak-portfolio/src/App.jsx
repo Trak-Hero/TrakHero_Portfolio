@@ -13,6 +13,9 @@ import UnmuteNudge from "./components/ui/UnmuteNudge"
 import HyperdriveOverlay from "./components/ui/HyperdriveOverlay"
 import SpaceRadio from "./components/ui/SpaceRadio";
 import PageLoader from "./components/ui/PageLoader";
+import SunsetInterlude from "./pages/SunsetInterlude";
+import AboutPage from "./pages/AboutPage";
+import "./pages/sunset-interlude.css";
 import React, { useEffect, useRef, useState } from "react"
 
 // ✨ Router
@@ -75,7 +78,7 @@ function Landing() {
   // Normal Explore → still goes to /menu
   const handleExploreClick = () => {
     document.getElementById('bg-music')?.play?.().catch(() => {});
-    navigate("/menu");
+    navigate("/interlude");
   };
 
   // Skills (Hyperdrive) → NO route change
@@ -85,7 +88,7 @@ function Landing() {
   };
 
   const handleHyperClose = () => setHyper(false);
-  const DISCOVER_OFFSET_X = 950; // moves right; use negative to move left
+  // const DISCOVER_OFFSET_X = 950; // moves right; use negative to move left
   const DISCOVER_OFFSET_Y = -200; // move up (negative goes upward)
 
   return (
@@ -110,14 +113,13 @@ function Landing() {
               <div
                 style={{
                   position: "absolute",
-                  top: "285vh",
-                  left: "50%",
-                  // center on 50%, then push right by DISCOVER_OFFSET_X
-                  transform: `translate(calc(-50% + ${DISCOVER_OFFSET_X}px), ${DISCOVER_OFFSET_Y}px)`,
-                  pointerEvents: "none",
-                  width: "100%",
+                  top: `calc(285vh + ${DISCOVER_OFFSET_Y}px)`,
+                  left: 0,
+                  width: "100vw",
                   display: "flex",
                   justifyContent: "center",
+                  pointerEvents: "none",
+                  zIndex: 30,
                 }}
               >
                 <div style={{ pointerEvents: "auto" }}>
@@ -147,6 +149,13 @@ function Landing() {
         Map of Trak’s Skills
       </button>
 
+      <button 
+        className="hyperdrive-portfolio-btn"
+        onClick={() => window.open("https://trakherogames.onrender.com/", "_blank")}
+      >
+        Hyperdrive to Trak’s Creative Portfolio
+      </button>
+
       {/* Hyperdrive overlay (no auto-route) */}
       {hyper && (
         <HyperdriveOverlay open={hyper} onClose={handleHyperClose} />
@@ -168,6 +177,8 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/interlude" element={<SunsetInterlude />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/menu" element={<MenuPage />} />
       </Routes>
     </Router>
