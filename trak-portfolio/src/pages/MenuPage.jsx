@@ -10,26 +10,32 @@ const DOMAINS = [
   {
     key: "ds",
     title: "Data Science",
+    subtitle: "Signals, models, prediction systems",
     url: "https://main-portfolio-8i9z.onrender.com/",
     art: `
-      radial-gradient(1200px 600px at 30% 50%, rgba(255,255,255,.08), transparent 60%),
-      linear-gradient(135deg, #0d1221, #14406d 45%, #1976d2)`
+      radial-gradient(900px 400px at 75% 55%, rgba(125,211,252,.22), transparent 45%),
+      radial-gradient(500px 240px at 30% 25%, rgba(255,255,255,.08), transparent 35%),
+      linear-gradient(135deg, #09111f 0%, #10345d 45%, #2d7bd3 100%)`
   },
   {
     key: "cs",
     title: "Computer Science",
+    subtitle: "Systems, full-stack, engineered worlds",
     url: "https://main-portfolio-8i9z.onrender.com/",
     art: `
-      radial-gradient(1200px 600px at 70% 40%, rgba(255,255,255,.10), transparent 60%),
-      linear-gradient(135deg, #0d1221, #3c1053 45%, #ad5389)`
+      radial-gradient(900px 420px at 72% 55%, rgba(236,72,153,.18), transparent 45%),
+      radial-gradient(500px 240px at 28% 25%, rgba(255,255,255,.08), transparent 35%),
+      linear-gradient(135deg, #0b1020 0%, #311245 42%, #a24aa2 100%)`
   },
   {
     key: "ux",
     title: "Design UI/UX",
+    subtitle: "Interfaces, journeys, visual systems",
     url: "https://main-portfolio-8i9z.onrender.com/",
     art: `
-      radial-gradient(1200px 600px at 50% 50%, rgba(255,255,255,.12), transparent 60%),
-      linear-gradient(135deg, #0d1221, #0f9b0f 45%, #f1f2b5)`
+      radial-gradient(900px 420px at 72% 55%, rgba(190,242,100,.18), transparent 45%),
+      radial-gradient(500px 240px at 28% 25%, rgba(255,255,255,.08), transparent 35%),
+      linear-gradient(135deg, #0a1118 0%, #0f6a18 42%, #9bd86b 100%)`
   },
 ];
 
@@ -43,16 +49,39 @@ export default function MenuPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(".menu-card", { y: 24, autoAlpha: 0 });
+      gsap.set(".menu-card", { y: 30, autoAlpha: 0, scale: 0.98 });
       gsap.to(".menu-card", {
         y: 0,
         autoAlpha: 1,
-        duration: 0.7,
+        scale: 1,
+        duration: 0.9,
         ease: "power3.out",
         stagger: 0.12,
       });
-      // Removed GSAP animation of .bg-stars (CSS handles drift/twinkle now)
+
+      gsap.fromTo(
+        ".menu-header",
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" }
+      );
+
+      gsap.to(".planet-orb", {
+        y: -18,
+        duration: 5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: 0.7,
+      });
+
+      gsap.to(".hud-ring", {
+        rotate: 360,
+        duration: 18,
+        repeat: -1,
+        ease: "none",
+      });
     }, containerRef);
+
     return () => ctx.revert();
   }, []);
 
@@ -60,7 +89,13 @@ export default function MenuPage() {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     gsap.set(overlayRef.current, { pointerEvents: "auto" });
 
-    tl.to(overlayRef.current, { autoAlpha: 1, duration: 0.15 })
+    tl.to(".menu-card", {
+      scale: 1.03,
+      filter: "blur(1px)",
+      duration: 0.18,
+      stagger: 0.03,
+    })
+      .to(overlayRef.current, { autoAlpha: 1, duration: 0.15 })
       .to(vignetteRef.current, { autoAlpha: 1, duration: 0.15 }, "<")
       .set(warpRef.current, { autoAlpha: 1, scale: 1 })
       .fromTo(
@@ -76,8 +111,7 @@ export default function MenuPage() {
           onUpdate: function () {
             if (!warpRef.current) return;
             const curStr =
-              getComputedStyle(warpRef.current).getPropertyValue("--offset") ||
-              "0px";
+              getComputedStyle(warpRef.current).getPropertyValue("--offset") || "0px";
             const cur = parseFloat(curStr);
             const next = cur + 140;
             warpRef.current.style.setProperty("--offset", `${next}px`);
@@ -95,19 +129,30 @@ export default function MenuPage() {
 
   return (
     <div ref={containerRef} className="menu-container">
-      {/* ❌ Close button */}
-        <button
-          className="menu-close"
-          onClick={() => navigate("/")}
-          aria-label="Close menu"
-        >
-          ✕
-        </button>
-      {/* Starfield and glow */}
-      <div className="bg-stars"></div>
-      <div className="bottom-glow"></div>
+      <button
+        className="menu-close"
+        onClick={() => navigate("/")}
+        aria-label="Close menu"
+      >
+        ✕
+      </button>
 
-      {/* Header */}
+      <div className="bg-stars" />
+      <div className="bg-nebula" />
+      <div className="bg-grid" />
+      <div className="bottom-glow" />
+
+      <div className="planet-orb orb-1" />
+      <div className="planet-orb orb-2" />
+      <div className="planet-orb orb-3" />
+
+      <div className="hud-frame">
+        <div className="hud-corner tl" />
+        <div className="hud-corner tr" />
+        <div className="hud-corner bl" />
+        <div className="hud-corner br" />
+      </div>
+
       <div className="menu-header">
         <div className="menu-subheader">
           <span className="line" />
@@ -115,34 +160,32 @@ export default function MenuPage() {
           <span className="line" />
         </div>
         <h1>Hold to Engage Hyperdrive</h1>
-        <p>Release to cancel</p>
+        <p>Choose a route and commit to the jump</p>
       </div>
 
-      {/* Cards */}
       <div className="menu-grid">
         {DOMAINS.map((d) => (
           <MenuCard
             key={d.key}
             title={d.title}
+            subtitle={d.subtitle}
             art={d.art}
             onConfirm={() => hyperdrive(d.url)}
           />
         ))}
       </div>
 
-      {/* Overlay FX */}
       <div ref={overlayRef} className="overlay">
         <div ref={warpRef} className="warp" />
         <div ref={vignetteRef} className="vignette" />
       </div>
 
-      {/* Whiteout */}
       <div ref={whiteoutRef} className="whiteout" />
     </div>
   );
 }
 
-function MenuCard({ title, art, onConfirm }) {
+function MenuCard({ title, subtitle, art, onConfirm }) {
   const btnRef = useRef(null);
   const ringRef = useRef(null);
   const holdTween = useRef(null);
@@ -157,6 +200,7 @@ function MenuCard({ title, art, onConfirm }) {
 
   const startHold = () => {
     if (holdTween.current) holdTween.current.kill();
+
     holdTween.current = gsap.fromTo(
       ringRef.current,
       { ["--p"]: 0 },
@@ -166,14 +210,19 @@ function MenuCard({ title, art, onConfirm }) {
         ease: "linear",
         onUpdate: () => {
           const p = Number(gsap.getProperty(ringRef.current, "--p")) || 0;
-          ringRef.current.style.background = `conic-gradient(#ffffff ${
-            p * 360
-          }deg, rgba(255,255,255,.15) 0)`;
+          ringRef.current.style.background = `conic-gradient(#ffffff ${p * 360}deg, rgba(255,255,255,.15) 0)`;
         },
         onComplete: onConfirm,
       }
     );
-    gsap.to(btnRef.current, { scale: 0.985, duration: 0.1 });
+
+    gsap.to(btnRef.current, {
+      scale: 0.985,
+      y: -2,
+      boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
+      duration: 0.12,
+    });
+
     clearTimeout(pressTimer.current);
     pressTimer.current = setTimeout(() => onConfirm(), HOLD_MS + 50);
   };
@@ -183,7 +232,7 @@ function MenuCard({ title, art, onConfirm }) {
     if (holdTween.current) holdTween.current.kill();
     ringRef.current.style.background =
       "conic-gradient(rgba(255,255,255,.15) 0deg, rgba(255,255,255,.15) 360deg)";
-    gsap.to(btnRef.current, { scale: 1, duration: 0.12 });
+    gsap.to(btnRef.current, { scale: 1, y: 0, duration: 0.12 });
   };
 
   return (
@@ -195,13 +244,23 @@ function MenuCard({ title, art, onConfirm }) {
       onPointerLeave={endHold}
       onPointerCancel={endHold}
     >
-      <div className="menu-card-art" style={{ background: art }} />
+      <div className="menu-card-art" style={{ background: art }}>
+        <div className="menu-card-scan" />
+        <div className="menu-card-stars" />
+      </div>
+
       <div className="menu-card-overlay">
         <div className="menu-card-label">HOLD</div>
         <div className="menu-card-title">{title}</div>
+        <div className="menu-card-subtitle">{subtitle}</div>
       </div>
+
+      <div className="menu-card-hud">
+        <div className="hud-ring" />
+      </div>
+
       <div className="progress-ring">
-        <div ref={ringRef} className="ring"></div>
+        <div ref={ringRef} className="ring" />
         <div className="ring-inner">⏺</div>
       </div>
     </button>

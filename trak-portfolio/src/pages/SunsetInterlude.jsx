@@ -78,6 +78,13 @@ export default function SunsetInterlude() {
   const nav = useNavigate();
   const controlsRef = useRef(null);
 
+  useEffect(() => {
+      if (controlsRef.current) {
+        controlsRef.current.target.set(-0.895, 18.375, 3.967);
+        controlsRef.current.update();
+      }
+    }, []);
+
   
 
   return (
@@ -85,12 +92,18 @@ export default function SunsetInterlude() {
       <div className="interlude-3d">
         <Canvas
             camera={{
-                position: [-0.587, 18.209, 7.759],
-                fov: 60.00,
+              position: [-0.587, 18.209, 7.759],
+              fov: 45,
+              near: 0.1,
+              far: 1000,
             }}
             dpr={[1, 2]}
-            onCreated={({ camera }) => camera.lookAt(-0.587, 18.209, 7.759)}
-            >
+            onCreated={({ camera }) => {
+              camera.position.set(-0.587, 18.209, 7.759);
+              camera.lookAt(-0.895, 18.375, 3.967);
+              camera.updateProjectionMatrix();
+            }}
+          >
             <ambientLight intensity={0.6} />
             <directionalLight position={[2, 5, 2]} intensity={1.2} />
 
@@ -114,12 +127,12 @@ export default function SunsetInterlude() {
 
             {/* Subtle parallax */}
             <ParallaxRig
-                basePos={[-0.587, 18.209, 7.759]}
-                baseTarget={[-0.895, 18.375, 3.967]}
-                intensity={0.35}        // ↓ tweak these three to taste
-                targetIntensity={0.20}
-                ease={0.08}
-                controlsRef={controlsRef}
+              basePos={[-0.587, 18.209, 7.759]}
+              baseTarget={[-0.895, 18.375, 3.967]}
+              intensity={0.12}
+              targetIntensity={0.08}
+              ease={0.06}
+              controlsRef={controlsRef}
             />
 
             </Canvas>

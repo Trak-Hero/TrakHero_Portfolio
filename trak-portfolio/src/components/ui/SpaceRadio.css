@@ -1,4 +1,5 @@
 .space-radio{
+  font-family: "Alegreya Sans", sans-serif;
   position: fixed;
   left: 18px;
   bottom: 18px;
@@ -12,7 +13,6 @@
   backdrop-filter: blur(8px);
   box-shadow: 0 10px 30px rgba(0,0,0,.3);
   color: #eaf2ff;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
 }
 
 .sr-row{ display: flex; gap: 6px; align-items: center; justify-content: center; }

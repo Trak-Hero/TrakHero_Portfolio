@@ -107,6 +107,7 @@ html, body, #root {
 /* put in a global css (e.g., index.css) */
 /* Fixed, always-on-top skills button */
 .skills-hyper-btn {
+  font-family: "Alegreya Sans", sans-serif;
   position: fixed;
   top: 18px;
   left: 18px;
@@ -150,3 +151,31 @@ html, body, #root {
   50% { opacity: 1; transform: translate(-50%, 6px); }
 }
 
+.hyperdrive-portfolio-btn {
+  font-family: "Alegreya Sans", sans-serif;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+
+  padding: 10px 20px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  color: white;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  font-size: 14px;
+  letter-spacing: 0.5px;
+
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.hyperdrive-portfolio-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateX(-50%) scale(1.05);
+}
